@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT-қолдау өтінімдері</title>
+    <style>
+        body { font-family: sans-serif; max-width: 750px; margin: 30px auto; padding: 0 15px; }
+        form { background: #f4f4f4; padding: 15px; border-radius: 6px; margin-bottom: 25px; }
+        button { padding: 8px 16px; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        .errorlist { color: red; }
+    </style>
+</head>
+<body>
+    <h1>IT-қолдау өтінімдерін тіркеу жүйесі</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Өтінім жіберу</button>
+    </form>
+
+    <h2>Өтінімдер тізімі</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Тақырып</th>
+                <th>Сипаттама</th>
+                <th>Басымдық</th>
+                <th>Мәртебе</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in tickets %}
+            <tr>
+                <td>{{ t.id }}</td>
+                <td>{{ t.title }}</td>
+                <td>{{ t.description }}</td>
+                <td>{{ t.priority }}</td>
+                <td><strong>{{ t.status }}</strong></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">Әзірге өтінімдер жоқ.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
